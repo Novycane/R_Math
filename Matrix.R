@@ -1,12 +1,24 @@
 # Matrix Math Routines
 #
+# Routines for solving matrix problems
+#
 # 01/18/2017
+#	- Added CROUT routine for LU factorization 
 #
 # Steven Novak
 #
 
-# LU Factorization
+# --------------------------------------------- Numerical Routines
 
+# LU Factorization
+# Factors a square non-singular matrix into
+# a lower (L) and unit upper (U) matrix
+#
+# Output is a square matrix with the lower
+# half being the L matrix, including the diagonal
+# The upper half is the remaining matrix, with
+# diagonal assumed to be 1's
+#
 LU <- function (X)
 {
 	rows <- dim(X)[1]
@@ -65,8 +77,7 @@ LU <- function (X)
 	return (lu)
 }
 
-# Helper Functions To Split Matrix
-#
+# --------------------------------------------- Helper Functions To Split Matrix
 
 # Returns the lower matrix
 # LU is a compact form L and U matrix where U is
@@ -89,6 +100,7 @@ L <- function(LU)
 # Returns the upper unity matrix
 # LU is a compact form L and U matrix where U is
 # an upper unity matrix
+#
 U <- function(LU)
 {
 	n <- dim(LU)[1]
