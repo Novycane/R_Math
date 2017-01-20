@@ -77,6 +77,57 @@ LU <- function (X)
 	return (lu)
 }
 
+
+
+# Back substitution routine
+#
+#
+
+BackSub <- function(L, b)
+{
+	print(L)
+	n <- dim(L)[1]
+	x <- matrix(0,n,1)
+
+	for(i in (1:n))
+	{
+		c = L[i,]
+	
+		x[i] <- (b[i] - (c %*% x)) / L[i,i]
+	}
+	return (x)
+}
+
+
+# Forward substitution routine
+#
+#
+ForwardSub <- function(U, b)
+{
+	n <- dim(U)[1]
+	x <- matrix(0,n,1)
+
+	for(i in (n:1))
+	{
+		c = U[i,]
+
+		x[i] <- (b[i] - (c %*% x)) / U[i,i]
+	}
+	return (x)
+}
+
+SolveLU <- function(A, b)
+{
+	lu <- LU(A)
+
+	l <- L(lu)
+	u <- U(lu)
+
+	y <- BackSub(l, b)
+	return (ForwardSub(u, y))
+}
+
+
 # --------------------------------------------- Helper Functions To Split Matrix
 
 # Returns the lower matrix
