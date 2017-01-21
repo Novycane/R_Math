@@ -8,7 +8,16 @@
 #
 #
 
+
+# Differentiate function
 #
+# Iterative function to calculate a functions derivative
+# using a centered approximation and Richardsone extrapolation
+#
+# FUN is the function to differentiate
+# X is the value to evaluate the derivative at
+# err is the desired numeric precision
+
 d <- function(FUN, X, err)
 {
 	maxIter <- 50
@@ -35,6 +44,7 @@ d <- function(FUN, X, err)
 			error <- nextRow[i] - lastRow[i-1]
 			if(abs(error) <= err)
 			{
+				print(i)
 				return (nextRow[i])
 			}
 		}
