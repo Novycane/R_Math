@@ -85,7 +85,6 @@ LU <- function (X)
 
 BackSub <- function(L, b)
 {
-	print(L)
 	n <- dim(L)[1]
 	x <- matrix(0,n,1)
 
