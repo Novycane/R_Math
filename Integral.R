@@ -13,6 +13,10 @@
 # using the CTrap routine below and a Richardson
 # extrapolation routine to speed convergence
 #
+# FUN is the function to integrate over x
+# a, b are the start and end range of x
+# err is the absolute value of the desired accuracy
+#
 
 Rhomberg <- function(FUN, a, b, err)
 {
@@ -20,7 +24,6 @@ Rhomberg <- function(FUN, a, b, err)
 	h = b - a
 
 	sum <- FUN(b) + FUN(a)
-	lastRow <- vector("numeric", maxIter)
 	nextRow <- vector("numeric", maxIter)
 	points <- a
 
