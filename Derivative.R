@@ -8,6 +8,43 @@
 #
 #
 
+#
+d <- function(FUN, X, err)
+{
+	maxIter <- 50
+	step <- X 
+	nextRow <- vector("numeric", maxIter)
+	
+	for(i in (1:maxIter))
+	{
+		nextRow[1] <- d_cent(FUN, X, step)
+		
+		# ---- Richardson extrapolation routine
+		k <- 2
+		factor <- 2
+		while( k <= i)
+		{
+			factor <- factor * 2
+			nextRow[k] <- (factor * nextRow[k-1] - lastRow[k - 1]) / (factor - 1)
+			k <- k + 1
+		}
+
+		# Check For change in precision < err
+		if(i > 1)
+		{
+			error <- nextRow[i] - lastRow[i-1]
+			if(abs(error) <= err)
+			{
+				return (nextRow[i])
+			}
+		}
+		lastRow <- nextRow
+		step <- step / 2
+	}
+	
+}
+
+
 # Forward Looking Numerical Derivative
 # FUN is a function where Y = FUN(X)
 # X in the input(s) to FUN(X)
