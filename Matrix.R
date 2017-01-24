@@ -8,6 +8,52 @@
 # Steven Novak
 #
 
+# --------------------------------------------- Helper Functions To Split Matrix
+
+# Returns the lower matrix
+# LU is a compact form L and U matrix where U is
+# an upper unity matrix
+L <- function(LU)
+{
+	n <- dim(LU)[1]
+	l <- matrix(0,n,n)
+
+	for(i in (1:n))
+	{
+		for(j in (1:i))
+		{
+			l[i,j] = LU[i,j]
+		}
+	}
+	return (l)
+}
+
+# Returns the upper unity matrix
+# LU is a compact form L and U matrix where U is
+# an upper unity matrix
+#
+U <- function(LU)
+{
+	n <- dim(LU)[1]
+	u <- matrix(0,n,n)
+
+	for(i in (1:n))
+	{
+		for(j in (i:n))
+		{
+			if(i == j)
+			{
+				u[i,j] = 1
+			}
+			else
+			{
+				u[i,j] = LU[i,j]
+			}
+		}		
+	}
+	return (u)
+}
+
 # --------------------------------------------- Numerical Routines
 
 # LU Factorization
@@ -126,49 +172,26 @@ SolveLU <- function(A, b)
 	return (ForwardSub(u, y))
 }
 
-
-# --------------------------------------------- Helper Functions To Split Matrix
-
-# Returns the lower matrix
-# LU is a compact form L and U matrix where U is
-# an upper unity matrix
-L <- function(LU)
+InvertLU <- function(A)
 {
-	n <- dim(LU)[1]
-	l <- matrix(0,n,n)
+	n <- dim(A)[1]
+	lu <- LU(A)
+	l <- L(lu)
+	u <- U(lu)
 
+	I <- matrix(0,n,n)
 	for(i in (1:n))
 	{
-		for(j in (1:i))
-		{
-			l[i,j] = LU[i,j]
-		}
+		I[i,i] = 1
+
+		b <- I[i,]
+		y <- BackSub(l, b)
+		z <- ForwardSub(u, y)
+
+		I[i,] <- t(z)
 	}
-	return (l)
+
+	return(I)
 }
 
-# Returns the upper unity matrix
-# LU is a compact form L and U matrix where U is
-# an upper unity matrix
-#
-U <- function(LU)
-{
-	n <- dim(LU)[1]
-	u <- matrix(0,n,n)
 
-	for(i in (1:n))
-	{
-		for(j in (i:n))
-		{
-			if(i == j)
-			{
-				u[i,j] = 1
-			}
-			else
-			{
-				u[i,j] = LU[i,j]
-			}
-		}		
-	}
-	return (u)
-}
