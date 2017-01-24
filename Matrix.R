@@ -161,6 +161,11 @@ ForwardSub <- function(U, b)
 	return (x)
 }
 
+# Solve a linear system of equations Ax = b
+# using LU decomposition
+#
+
+
 SolveLU <- function(A, b)
 {
 	lu <- LU(A)
@@ -171,6 +176,10 @@ SolveLU <- function(A, b)
 	y <- BackSub(l, b)
 	return (ForwardSub(u, y))
 }
+
+# Invert a matrix using LU Decomposition
+#
+#
 
 InvertLU <- function(A)
 {
@@ -192,6 +201,21 @@ InvertLU <- function(A)
 	}
 
 	return(I)
+}
+
+# Find the determinate of a matrix using
+# LU decomposition
+#
+
+DetLU <- function(A)
+{
+	lu <- LU(A)
+	prod <- 1
+	for(i in 1:dim(A)[1])
+	{
+		prod = prod * lu[i,i]
+	}
+	return (prod)
 }
 
 
