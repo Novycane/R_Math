@@ -218,4 +218,39 @@ DetLU <- function(A)
 	return (prod)
 }
 
+# Find the most dominate eigen value / vector
+# using the power method
+#
 
+EigenPower <- function(A, X)
+{
+	n <- dim(A)[1]
+	x <-X
+
+	lambdaOld <- 10000
+	lambda <- 0
+	for(i in 1 : 100)
+	{
+		x <- A %*% x
+
+		lambdaOld2 <- lambdaOld
+		lambda <- 0
+		for(j in 1:n)
+		{
+			if(abs(x[j]) > abs(lambda))
+			{
+				lambda <- x[j]
+			}
+		}
+
+		x <- x / lambda
+		err <- abs((lambda - lambdaOld))
+		if(err <= 1e-5)
+		{
+		       break
+		}
+	}
+	eval.parent(substitute(	X <- x))
+
+	return(lambda)
+}
