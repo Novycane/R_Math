@@ -191,6 +191,10 @@ pd2 <- function(FUN, Vars, partial, err)
 {
 	maxIter <- 50
 	step <- Vars[partial]
+	if(step == 0)
+	{
+		step = 0.1
+	}
 	nextRow <- vector("numeric", maxIter)
 	
 	for(i in (1:maxIter))
@@ -213,7 +217,6 @@ pd2 <- function(FUN, Vars, partial, err)
 			error <- nextRow[i] - lastRow[i-1]
 			if(abs(error) <= err)
 			{
-				print(i)
 				return (nextRow[i])
 			}
 		}
@@ -237,6 +240,10 @@ pd <- function(FUN, Vars, partial, err)
 {
 	maxIter <- 50
 	step <- Vars[partial]
+	if(step == 0)
+	{
+		step = 0.1
+	}
 	nextRow <- vector("numeric", maxIter)
 	
 	for(i in (1:maxIter))
@@ -259,14 +266,12 @@ pd <- function(FUN, Vars, partial, err)
 			error <- nextRow[i] - lastRow[i-1]
 			if(abs(error) <= err)
 			{
-				print(i)
 				return (nextRow[i])
 			}
 		}
 		lastRow <- nextRow
 		step <- step / 2
 	}
-	
 }
 
 # Centered Second Numerical Partial Derivative
