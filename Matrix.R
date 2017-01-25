@@ -56,6 +56,38 @@ U <- function(LU)
 
 # --------------------------------------------- Numerical Routines
 
+# Cholesky Factorization
+# Factors a symmetric positive definite matrix A
+# 
+#
+Cholesky <- function(A)
+{
+	n <- dim(A)[1]
+
+	for(i in 1:(n-1))
+	{
+		A[i,i] <- sqrt(A[i,i])
+
+		l <- 0
+		for(j in (i+1):n)
+		{
+			A[j,i] <- A[j,i] / A[i,i]
+			A[i,j] <- 0
+		}
+
+		for(j in (i+1):n)
+		{
+			for(k in (i+1):n)
+			{
+				A[j,k] <- A[j,k] - A[k,i] * A[j,i]
+			}
+		}
+	}
+	A[n,n] <- sqrt(A[n,n])
+	return(A)
+}
+
+
 # LU Factorization
 # Factors a square non-singular matrix into
 # a lower (L) and unit upper (U) matrix
