@@ -33,3 +33,30 @@ Euler <- function(FUN, a, b, step, ic)
 
 	return(y)
 }
+
+# Eulers Method for first order differential equations
+# using trapezoidal integration
+#
+# FUN a function in the form dY/dx = FUN(x)
+# a is start of range
+# b is the end of the range
+# step is the step size
+#
+
+EulerTrap <- function(FUN, a, b, step, ic)
+{
+	y <- vector("numeric", (b-a) / step)
+
+	i = 1
+	y[i] <- ic
+	
+	for(x in seq(a + step,b,step))
+	{
+		i = i + 1
+		yprime <- FUN(y[i-1])
+		y[i] <- y[i-1] + (step / 2) * (yprime + FUN(y[i-1] + step * yprime))
+	}
+
+	return(y)
+
+}
